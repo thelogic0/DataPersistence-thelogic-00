@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="DataPersistence-thelogic-00/DataPersistence-thelogic-00.vcxproj" />
+</Solution>
