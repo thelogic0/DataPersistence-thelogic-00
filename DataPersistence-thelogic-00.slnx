@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="DataPersistence-thelogic-00/DataPersistence-thelogic-00.vcxproj" />
+  <Project Path="DataPersistence-thelogic-00/DataPersistence-thelogic-00.vcxproj" Id="ba591711-3381-44c8-8bbb-454ce40e83fc" />
 </Solution>

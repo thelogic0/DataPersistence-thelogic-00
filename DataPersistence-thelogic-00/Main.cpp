@@ -9,7 +9,11 @@ int main(int argc, char** argv) {
 
 #else
 
+#include "ConsoleApp.h"
+
 int main() {
+    ConsoleApp app("samples.json", "orders.json", "production_queue.json");
+    app.run();
     return 0;
 }
 
