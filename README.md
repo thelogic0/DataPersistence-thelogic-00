@@ -1,28 +1,27 @@
 # DataPersistence-thelogic-00
 
-A C++20 console PoC proving JSON-file data persistence with full CRUD for three entities
-(`Sample`, `Order`, `ProductionQueueItem`), verifying that data survives application restarts.
+JSON 파일 기반 데이터 영속성을 검증하는 C++20 콘솔 PoC입니다. 시료(`Sample`), 주문(`Order`), 생산 큐 항목(`ProductionQueueItem`) 3개 엔티티에 대해 CRUD 전체를 구현하고, 프로그램을 재시작해도 데이터가 유지되는지 검증합니다.
 
-## Architecture
+## 아키텍처
 
-- **`JsonParser`** (`Json.h`/`Json.cpp`) — a hand-rolled JSON parser/serializer. No external JSON library is used.
-- **Entities** (`Sample`, `Order`, `ProductionQueueItem`) — plain value classes with getters/setters, `toJson()`, and a static `fromJson(JsonParser&)`.
-- **Repositories** (`SampleRepository`, `OrderRepository`, `ProductionQueueRepository`) — one per entity, each owning a single JSON file. Loads on construction, saves after every mutating call (`add`/`remove`/`update`), and rejects duplicate IDs on `add`.
-- **`ConsoleApp`** — the interactive menu wiring all three repositories together.
-- **`Main.cpp`** — Debug builds run the full gtest suite on launch; Release builds launch the interactive `ConsoleApp` menu.
+- **`JsonParser`** (`Json.h`/`Json.cpp`) — 외부 JSON 라이브러리 없이 직접 구현한 JSON 파서/직렬화기.
+- **엔티티** (`Sample`, `Order`, `ProductionQueueItem`) — getter/setter, `toJson()`, 정적 `fromJson(JsonParser&)`를 갖춘 순수 값 클래스.
+- **Repository** (`SampleRepository`, `OrderRepository`, `ProductionQueueRepository`) — 엔티티별로 하나씩, 각각 JSON 파일 하나를 담당. 생성 시 파일을 로드하고, 변경 메서드(`add`/`remove`/`update`) 호출 후 즉시 저장하며, `add` 시 중복 ID를 거부.
+- **`ConsoleApp`** — 세 Repository를 연결하는 대화형 메뉴.
+- **`Main.cpp`** — Debug 빌드는 실행 시 gtest 전체 테스트를 수행하고, Release 빌드는 `ConsoleApp` 메뉴를 실행.
 
-## Build & Run
+## 빌드 및 실행
 
-Open `DataPersistence-thelogic-00.slnx` in Visual Studio 2022+ and build, or from the command line:
+`DataPersistence-thelogic-00.slnx`를 Visual Studio 2022 이상에서 열어 빌드하거나, 커맨드라인에서:
 
 ```
 MSBuild.exe DataPersistence-thelogic-00.slnx /p:Configuration=Debug /p:Platform=x64
 MSBuild.exe DataPersistence-thelogic-00.slnx /p:Configuration=Release /p:Platform=x64
 ```
 
-- **Debug**: running the executable runs all unit tests (currently 43 tests, all passing) and reports results to the console.
-- **Release**: running the executable launches the interactive CRUD menu (Sample / Order / ProductionQueueItem).
+- **Debug**: 실행 파일을 구동하면 전체 단위 테스트(현재 43개, 전부 통과)가 실행되고 결과가 콘솔에 출력됩니다.
+- **Release**: 실행 파일을 구동하면 대화형 CRUD 메뉴(시료 / 주문 / 생산 큐 항목)가 시작됩니다.
 
-## Data Files
+## 데이터 파일
 
-`samples.json`, `orders.json`, and `production_queue.json` are created in the working directory the first time each entity is used, and are gitignored — they are runtime data, not source.
+`samples.json`, `orders.json`, `production_queue.json`은 각 엔티티가 처음 사용될 때 작업 디렉터리에 생성되며, 소스가 아닌 런타임 데이터이므로 gitignore 처리되어 있습니다.
